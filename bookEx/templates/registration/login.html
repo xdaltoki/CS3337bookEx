@@ -2,29 +2,30 @@
 {% load static %}
 
 {% block sidenav %}
-      <li>
-        <a href="/">  Home </a>
-      </li>
+<a href="/" class="nav-link"><i class="bi bi-house-fill"></i> Home</a>
 {% endblock sidenav %}
 
 {% block content %}
-  <h1>User Login</h1>
+<div class="page-header"><i class="bi bi-box-arrow-in-right"></i> Login</div>
+<div class="bx-card p-4" style="max-width:420px;margin:0 auto;">
+    <div class="text-center mb-4">
+        <i class="bi bi-person-circle" style="font-size:3rem;color:#c0000c;"></i>
+        <h4 class="mt-2 fw-bold">Welcome Back</h4>
+    </div>
     <form action="{% url 'login' %}" method="post">
-      <table>
-         {{ form.as_table }}
-          <tr>
-             <td>
-                 <input type="submit" value="login">
-             </td>
-          </tr>
-      </table>
-        <p>
-            To register
-        </p>
-
-      <input type="hidden" name="next" value="{{ next }}" />
-      {% csrf_token %}
-     </form>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label fw-semibold">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button type="submit" class="btn-bx-primary w-100 justify-content-center mt-2" style="padding:.6rem;">
+            <i class="bi bi-box-arrow-in-right"></i> Login
+        </button>
+        <p class="text-center mt-3 text-muted small">Don't have an account? <a href="{% url 'register' %}" style="color:#c0000c;">Register</a></p>
+    </form>
+</div>
 {% endblock content %}
-
- 

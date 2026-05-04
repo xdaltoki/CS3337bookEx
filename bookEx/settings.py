@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-kh2xq!44-uu6hq8ricxpqup3ugyj9e)z&n6%&mt8*$8$=lzwxj"
+SECRET_KEY = "django-insecure-axyij65d6o)en6hp0ahkwcoo@bq(0hi14(m*1k#)x=%!)q*iv("
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "bookMng.apps.BookmngConfig",
+"bookMng.apps.BookmngConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -117,10 +117,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+#Default primary key field type
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'bookEx/static')
-]
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'bookEx/static')]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -4,63 +4,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Layout Page</title>
-    <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{% static 'table_format.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'displaybook.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'aboutus.css' %}" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookExchange</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bx-red:    #c0000c;
+            --bx-red-dk: #8b0000;
+            --bx-black:  #111111;
+            --bx-white:  #ffffff;
+            --bx-gray:   #f5f5f5;
+            --sidebar-w: 240px;
+        }
+        body { margin:0; background:var(--bx-gray); font-family:'Segoe UI',system-ui,sans-serif; display:flex; flex-direction:column; min-height:100vh; }
+        .bx-navbar { background:var(--bx-black); color:var(--bx-white); height:60px; display:flex; align-items:center; padding:0 1.25rem; position:sticky; top:0; z-index:1040; box-shadow:0 2px 6px rgba(0,0,0,.45); }
+        .bx-navbar .brand { font-size:1.3rem; font-weight:700; color:var(--bx-white); text-decoration:none; letter-spacing:.5px; display:flex; align-items:center; gap:.45rem; }
+        .bx-navbar .brand i { color:var(--bx-red); font-size:1.5rem; }
+        .bx-navbar .user-area { margin-left:auto; display:flex; align-items:center; gap:.75rem; font-size:.9rem; }
+        .bx-navbar .user-area .username { color:#ccc; }
+        .bx-navbar .user-area a, .bx-navbar .user-area button { color:var(--bx-white); background:var(--bx-red); border:none; border-radius:6px; padding:.3rem .75rem; font-size:.85rem; cursor:pointer; text-decoration:none; transition:background .2s; display:inline-flex; align-items:center; gap:.3rem; }
+        .bx-navbar .user-area a:hover, .bx-navbar .user-area button:hover { background:var(--bx-red-dk); }
+        #sidebarToggle { background:none; border:none; color:var(--bx-white); font-size:1.5rem; cursor:pointer; padding:0 .6rem 0 0; line-height:1; transition:color .2s; }
+        #sidebarToggle:hover { color:var(--bx-red); }
+        .bx-body { display:flex; flex:1; }
+        .bx-sidebar { width:var(--sidebar-w); background:var(--bx-black); min-height:100%; transition:width .25s ease; overflow:hidden; flex-shrink:0; }
+        .bx-sidebar.collapsed { width:0; }
+        .bx-sidebar nav { padding:1rem 0; min-width:var(--sidebar-w); }
+        .bx-sidebar .nav-section-label { color:#666; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; padding:.75rem 1.25rem .25rem; }
+        .bx-sidebar a.nav-link { display:flex; align-items:center; gap:.6rem; color:#ccc; padding:.55rem 1.25rem; font-size:.93rem; text-decoration:none; transition:background .15s, color .15s; border-radius:0; }
+        .bx-sidebar a.nav-link i { font-size:1.1rem; width:1.3rem; text-align:center; }
+        .bx-sidebar a.nav-link:hover, .bx-sidebar a.nav-link.active { background:var(--bx-red); color:var(--bx-white); }
+        .bx-sidebar .divider { border-top:1px solid #222; margin:.5rem 1rem; }
+        .bx-main { flex:1; padding:2rem; overflow-x:hidden; }
+        .page-header { background:var(--bx-red); color:white; padding:.6rem 1.2rem; border-radius:8px; margin-bottom:1.5rem; display:flex; align-items:center; gap:.5rem; font-size:1.2rem; font-weight:600; }
+        .bx-card { background:white; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,.08); overflow:hidden; }
+        .bx-table thead th { background:var(--bx-black); color:white; border-color:#333; }
+        .bx-table tbody tr:hover { background:#fff0f0 !important; }
+        .bx-table .caption-row th { background:var(--bx-red); color:white; text-align:center; font-size:1.05rem; }
+        .btn-bx-primary { background:var(--bx-red); color:white; border:none; border-radius:6px; padding:.4rem .9rem; font-size:.9rem; transition:background .2s; display:inline-flex; align-items:center; gap:.35rem; }
+        .btn-bx-primary:hover { background:var(--bx-red-dk); color:white; }
+        .btn-bx-outline { border:2px solid var(--bx-red); color:var(--bx-red); background:transparent; border-radius:6px; padding:.35rem .85rem; font-size:.9rem; transition:all .2s; display:inline-flex; align-items:center; gap:.35rem; }
+        .btn-bx-outline:hover { background:var(--bx-red); color:white; }
+        .form-control:focus, .form-select:focus { border-color:var(--bx-red); box-shadow:0 0 0 .2rem rgba(192,0,12,.2); }
+        .bx-footer { background:var(--bx-black); color:#aaa; text-align:center; padding:.9rem; font-size:.85rem; }
+        .bx-footer span { color:var(--bx-red); }
+        @media (max-width:768px) { .bx-sidebar { position:fixed; top:60px; left:0; height:calc(100vh - 60px); z-index:1030; } }
+    </style>
 </head>
 <body>
 
-        <span style="float: right;">
-            {% if user.is_authenticated %}
-               {{ user.username}}
-               <form action="{% url 'logout' %}?next=/" method="post">
-                   <button type="submit">logout</button>
-                   {% csrf_token %}
-               </form>
-            {% else %}
-               Not Logged in
-               <a href="{% url 'login' %}?next=/">login</a>
-            {% endif %}
-        </span>
-
-    <!-- Top Banner -->
-    <header class="banner">
-        <h1>My Website Banner</h1>
-    </header>
-
-    <!-- Main Layout Container -->
-    <div class="container">
-
-        <!-- Left Menu -->
-        <nav class="sidebar">
-            <ul>
-                {% block sidenav %}
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="{% url 'aboutus' %}">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                {% endblock sidenav %}
-            </ul>
-        </nav>
-
-        <!-- Main Content (Right Side) -->
-            <main class="content">
-            {% block content %}
-               <h1>Main Content</h1>
-            {% endblock content %}
-        </main>
-
-
-
+<header class="bx-navbar">
+    <button id="sidebarToggle" title="Toggle sidebar"><i class="bi bi-list"></i></button>
+    <a href="/" class="brand"><i class="bi bi-book-half"></i> BookExchange</a>
+    <div class="user-area">
+        {% if user.is_authenticated %}
+            <i class="bi bi-person-circle" style="color:#aaa;font-size:1.2rem;"></i>
+            <span class="username">{{ user.username }}</span>
+            <form action="{% url 'logout' %}?next=/" method="post" style="margin:0;">
+                {% csrf_token %}
+                <button type="submit"><i class="bi bi-box-arrow-right"></i> Logout</button>
+            </form>
+        {% else %}
+            <span class="username">Not logged in</span>
+            <a href="{% url 'login' %}?next=/"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+        {% endif %}
     </div>
+</header>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2026 CS3337 CSULA. All rights reserved.</p>
-    </footer>
+<div class="bx-body">
+    <aside class="bx-sidebar" id="sidebar">
+        <nav>
+            <div class="nav-section-label">Navigation</div>
+            {% block sidenav %}
+            <a href="/" class="nav-link"><i class="bi bi-house-fill"></i> Home</a>
+            <a href="{% url 'displaybooks' %}" class="nav-link"><i class="bi bi-grid-fill"></i> Display Books</a>
+            <a href="{% url 'postbook' %}" class="nav-link"><i class="bi bi-plus-circle-fill"></i> Post Book</a>
+            <a href="{% url 'mybooks' %}" class="nav-link"><i class="bi bi-book-fill"></i> My Books</a>
+            <a href="{% url 'aboutus' %}" class="nav-link"><i class="bi bi-info-circle-fill"></i> About Us</a>
+            {% endblock sidenav %}
+            {% if user.is_authenticated %}
+            <div class="divider"></div>
+            <div class="nav-section-label">My Account</div>
+            <a href="{% url 'my_favorites' %}" class="nav-link"><i class="bi bi-star-fill"></i> My Favorites</a>
+            {% endif %}
+        </nav>
+    </aside>
 
+    <main class="bx-main">
+        {% block content %}
+        <div class="page-header"><i class="bi bi-house-fill"></i> Home</div>
+        <p>Welcome to BookExchange!</p>
+        {% endblock content %}
+    </main>
+</div>
+
+<footer class="bx-footer">
+    &copy; 2026 <span>BookExchange</span> &mdash; CS3337 CSULA. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('sidebarToggle').addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+    sidebar.querySelectorAll('a.nav-link').forEach(l => { if(l.href===location.href) l.classList.add('active'); });
+</script>
 </body>
 </html>

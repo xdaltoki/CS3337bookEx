@@ -2,25 +2,26 @@
 {% load static %}
 
 {% block sidenav %}
-   {% for item in item_list %}
-      <li>
-        <a href="{{ item.link }}"> {{ item.item }} </a>
-      </li>
-   {% endfor %}
+{{ block.super }}
 {% endblock sidenav %}
 
 {% block content %}
-<div class="form-container">
-    <h2>Rate Book</h2>
-
-    <p><strong>Book:</strong> {{ book.name }}</p>
-    <p><strong>Current Average Rating:</strong> {{ book.average_rating }} / 5</p>
-
+<div class="page-header"><i class="bi bi-star-half"></i> Rate Book</div>
+<div class="bx-card p-4" style="max-width:480px;">
+    <p><strong><i class="bi bi-book"></i> Book:</strong> {{ book.name }}</p>
+    <p><strong><i class="bi bi-star-fill" style="color:#c0000c;"></i> Current Rating:</strong> {{ book.average_rating }} / 5</p>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="rate-btn">Submit Rating</button>
-        <a href="{% url 'displaybooks' %}" class="cancel-btn">Cancel</a>
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label fw-semibold">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn-bx-primary"><i class="bi bi-star-fill"></i> Submit Rating</button>
+            <a href="{% url 'displaybooks' %}" class="btn-bx-outline text-decoration-none"><i class="bi bi-x"></i> Cancel</a>
+        </div>
     </form>
 </div>
 {% endblock content %}

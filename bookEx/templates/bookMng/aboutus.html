@@ -2,137 +2,137 @@
 {% load static %}
 
 {% block sidenav %}
-   {% for item in item_list %}
-      <li>
-        <a href="{{ item.link }}">  {{ item.item }} </a>
-      </li>
-   {% endfor %}
-   <li><a href="{% url 'aboutus' %}">About</a></li>
+{{ block.super }}
 {% endblock sidenav %}
 
 {% block content %}
-<div class="about-wrapper">
+<div class="page-header"><i class="bi bi-info-circle-fill"></i> About BookExchange</div>
 
-    <!-- Hero Section -->
-    <section class="about-hero">
-        <div class="hero-icon">📚</div>
-        <h1 class="about-title">About BookExchange</h1>
-        <p class="about-subtitle">
-            A community-driven platform connecting readers, sharing stories, and giving books a second life.
-        </p>
-    </section>
+<!-- Hero -->
+<div class="bx-card p-4 text-center mb-4">
+    <i class="bi bi-book-half" style="font-size:4rem;color:#c0000c;"></i>
+    <h2 class="fw-bold mt-3">About BookExchange</h2>
+    <p class="text-muted mt-2 mx-auto" style="max-width:520px;">
+        A community-driven platform connecting readers, sharing stories, and giving books a second life.
+    </p>
+</div>
 
-    <!-- Purpose Section -->
-    <section class="about-section">
-        <div class="section-header">
-            <span class="section-icon">🎯</span>
-            <h2>Our Purpose</h2>
-        </div>
-        <div class="section-body">
-            <p>
-                <strong>BookExchange</strong> was built by students at Cal State LA (CS3337) with a simple mission:
-                make books more accessible and reduce waste by helping readers trade, discover, and connect over literature.
-            </p>
-            <p>
-                Every book has a story — not just the one printed on its pages. Our platform gives books a second life
-                by connecting people who have finished reading with those who are eager to begin. Whether you're a
-                casual reader or a passionate bibliophile, BookExchange is your digital community bookshelf.
-            </p>
-            <div class="purpose-highlights">
-                <div class="highlight-card">
-                    <span class="highlight-icon">♻️</span>
-                    <span>Reduce book waste</span>
-                </div>
-                <div class="highlight-card">
-                    <span class="highlight-icon">🤝</span>
-                    <span>Build community</span>
-                </div>
-                <div class="highlight-card">
-                    <span class="highlight-icon">📖</span>
-                    <span>Promote reading</span>
-                </div>
+<!-- Purpose -->
+<div class="bx-card p-4 mb-4">
+    <h5 class="fw-bold mb-3" style="color:#c0000c;"><i class="bi bi-bullseye"></i> Our Purpose</h5>
+    <p><strong>BookExchange</strong> was built by students at Cal State LA (CS3337) with a simple mission:
+    make books more accessible and reduce waste by helping readers trade, discover, and connect over literature.</p>
+    <p>Every book has a story. Our platform gives books a second life by connecting people who have finished
+    reading with those eager to begin.</p>
+    <div class="row g-3 mt-2">
+        <div class="col-sm-4">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-recycle" style="font-size:2rem;color:#c0000c;"></i>
+                <p class="mb-0 mt-2 fw-semibold">Reduce Book Waste</p>
             </div>
         </div>
-    </section>
+        <div class="col-sm-4">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-people-fill" style="font-size:2rem;color:#c0000c;"></i>
+                <p class="mb-0 mt-2 fw-semibold">Build Community</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-book-open-fill" style="font-size:2rem;color:#c0000c;"></i>
+                <p class="mb-0 mt-2 fw-semibold">Promote Reading</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Features Section -->
-    <section class="about-section">
-        <div class="section-header">
-            <span class="section-icon">⚡</span>
-            <h2>Features &amp; Services</h2>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📤</div>
-                <h3>Post a Book</h3>
-                <p>List a book you'd like to exchange. Add a title, author, description, and cover photo so other readers know what's available.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔍</div>
-                <h3>Browse Books</h3>
-                <p>Explore all available books on the platform. Find your next great read posted by members of the community.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📋</div>
-                <h3>Book Details</h3>
-                <p>View full details of any listing, including description, condition, and who posted it, before deciding to request an exchange.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🗂️</div>
-                <h3>My Books</h3>
-                <p>Keep track of all the books you've posted in one convenient place. Manage or remove your listings at any time.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⭐</div>
-                <h3>Rate Books</h3>
-                <p>Share your thoughts by rating books you've received through the platform. Help the community make informed choices.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔐</div>
-                <h3>Secure Accounts</h3>
-                <p>Register and log in securely. Your account keeps your listings and activity safe and easily accessible.</p>
+<!-- Features -->
+<div class="bx-card p-4 mb-4">
+    <h5 class="fw-bold mb-3" style="color:#c0000c;"><i class="bi bi-lightning-fill"></i> Features &amp; Services</h5>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="bx-card p-3 h-100 border">
+                <div class="mb-2" style="font-size:1.8rem;color:#c0000c;"><i class="bi bi-upload"></i></div>
+                <h6 class="fw-bold">Post a Book</h6>
+                <p class="text-muted small mb-0">List a book you'd like to exchange with a title, author, and cover photo.</p>
             </div>
         </div>
-    </section>
+        <div class="col-md-4">
+            <div class="bx-card p-3 h-100 border">
+                <div class="mb-2" style="font-size:1.8rem;color:#c0000c;"><i class="bi bi-search"></i></div>
+                <h6 class="fw-bold">Browse Books</h6>
+                <p class="text-muted small mb-0">Explore all available books posted by community members.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bx-card p-3 h-100 border">
+                <div class="mb-2" style="font-size:1.8rem;color:#c0000c;"><i class="bi bi-file-text"></i></div>
+                <h6 class="fw-bold">Book Details</h6>
+                <p class="text-muted small mb-0">View full listing details before deciding to request an exchange.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bx-card p-3 h-100 border">
+                <div class="mb-2" style="font-size:1.8rem;color:#c0000c;"><i class="bi bi-collection"></i></div>
+                <h6 class="fw-bold">My Books</h6>
+                <p class="text-muted small mb-0">Track and manage all the books you've posted in one place.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bx-card p-3 h-100 border">
+                <div class="mb-2" style="font-size:1.8rem;color:#c0000c;"><i class="bi bi-star-fill"></i></div>
+                <h6 class="fw-bold">Rate Books</h6>
+                <p class="text-muted small mb-0">Share your thoughts by rating books to help the community.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bx-card p-3 h-100 border">
+                <div class="mb-2" style="font-size:1.8rem;color:#c0000c;"><i class="bi bi-shield-lock-fill"></i></div>
+                <h6 class="fw-bold">Secure Accounts</h6>
+                <p class="text-muted small mb-0">Register and log in securely to keep your listings safe.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Team Section -->
-    <section class="about-section">
-        <div class="section-header">
-            <span class="section-icon">👥</span>
-            <h2>Meet the Team</h2>
-        </div>
-        <p class="team-intro">
-            BookExchange was developed by a dedicated group of Computer Science students at
-            <strong>California State University, Los Angeles</strong> as part of the CS3337 course.
-        </p>
-        <div class="team-grid">
-            <div class="team-card">
-                <div class="team-avatar">👤</div>
-                <h3 class="team-name">Member Name</h3>
-                <span class="team-role">Backend Developer</span>
-                <p class="team-bio">Responsible for server-side logic, database models, and Django views.</p>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar">👤</div>
-                <h3 class="team-name">Member Name</h3>
-                <span class="team-role">Frontend Developer</span>
-                <p class="team-bio">Designed and implemented the HTML templates, CSS styling, and user interface.</p>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar">👤</div>
-                <h3 class="team-name">Member Name</h3>
-                <span class="team-role">Full Stack Developer</span>
-                <p class="team-bio">Worked across the stack, connecting views, URLs, and database functionality.</p>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar">👤</div>
-                <h3 class="team-name">Member Name</h3>
-                <span class="team-role">QA &amp; Documentation</span>
-                <p class="team-bio">Handled testing, debugging, and writing project documentation.</p>
+<!-- Team -->
+<div class="bx-card p-4 mb-4">
+    <h5 class="fw-bold mb-3" style="color:#c0000c;"><i class="bi bi-people-fill"></i> Meet the Team</h5>
+    <p class="text-muted">Built by CS students at <strong>California State University, Los Angeles</strong> — CS3337.</p>
+    <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-person-circle" style="font-size:2.5rem;color:#c0000c;"></i>
+                <p class="fw-semibold mt-2 mb-0">Freddy Montano</p>
             </div>
         </div>
-        <p class="team-note">✏️ <em>Replace the placeholder names, roles, and bios above with your actual team members.</em></p>
-    </section>
-
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-person-circle" style="font-size:2.5rem;color:#c0000c;"></i>
+                <p class="fw-semibold mt-2 mb-0">Roy Mendez-Estrada</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-person-circle" style="font-size:2.5rem;color:#c0000c;"></i>
+                <p class="fw-semibold mt-2 mb-0">Tae Ha Kim</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-person-circle" style="font-size:2.5rem;color:#c0000c;"></i>
+                <p class="fw-semibold mt-2 mb-0">Ryan Takeshita</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="bx-card p-3 text-center border">
+                <i class="bi bi-person-circle" style="font-size:2.5rem;color:#c0000c;"></i>
+                <p class="fw-semibold mt-2 mb-0">Anthony Perez</p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
+    </section>
+
+

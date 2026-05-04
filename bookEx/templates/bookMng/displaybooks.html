@@ -2,47 +2,70 @@
 {% load static %}
 
 {% block sidenav %}
-   {% for item in item_list %}
-      <li>
-        <a href="{{ item.link }}"> {{ item.item }} </a>
-      </li>
-   {% endfor %}
+{{ block.super }}
 {% endblock sidenav %}
 
 {% block content %}
-  <div class="table-container">
-    <table class="professional-table">
-      <thead>
-        <tr class="table-title-row">
-          <th colspan="6">Display Books</th>
-        </tr>
-        <tr>
-          <th>Book Name</th>
-          <th>Book Price</th>
-          <th>User Name</th>
-          <th>Post Date</th>
-          <th>Average Rating</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for book in books %}
-        <tr>
-          <td><a href="{% url 'book_detail' book.id %}">{{ book.name }}</a></td>
-          <td>{{ book.price }}</td>
-          <td>{{ book.username }}</td>
-          <td>{{ book.publishdate }}</td>
-          <td>{{ book.average_rating }} / 5</td>
-          <td>
-            {% if user.is_authenticated and book.username != user %}
-              <a href="{% url 'rate_book' book.id %}" class="rate-btn">Rate</a>
-            {% else %}
-              -
-            {% endif %}
-          </td>
-        </tr>
-         {% endfor %}
-      </tbody>
+<div class="page-header"><i class="bi bi-grid-fill"></i> Browse Books</div>
+
+<!-- Search Form -->
+<div class="bx-card p-3 mb-3 d-flex gap-2 align-items-center flex-wrap">
+    <form method="GET" action="{% url 'displaybooks' %}" class="d-flex gap-2 flex-wrap w-100">
+        <div class="input-group" style="max-width:400px;">
+            <span class="input-group-text bg-dark text-white border-dark"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" name="q" value="{{ query }}" placeholder="Search by book name...">
+        </div>
+        <button type="submit" class="btn-bx-primary"><i class="bi bi-search"></i> Search</button>
+        {% if query %}
+        <a href="{% url 'displaybooks' %}" class="btn-bx-outline text-decoration-none"><i class="bi bi-x-circle"></i> Clear</a>
+        {% endif %}
+    </form>
+</div>
+
+<div class="bx-card overflow-hidden">
+    <table class="table table-hover bx-table mb-0">
+        <thead>
+            <tr class="caption-row"><th colspan="6"><i class="bi bi-journals"></i> Available Books</th></tr>
+            <tr>
+                <th><i class="bi bi-book"></i> Book Name</th>
+                <th><i class="bi bi-tag"></i> Price</th>
+                <th><i class="bi bi-person"></i> Posted By</th>
+                <th><i class="bi bi-calendar3"></i> Date</th>
+                <th><i class="bi bi-star"></i> Favorite</th>
+                <th><i class="bi bi-gear"></i> Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td><a href="{% url 'book_detail' book.id %}" style="color:#c0000c;font-weight:600;">{{ book.name }}</a></td>
+                <td>${{ book.price }}</td>
+                <td>{{ book.username }}</td>
+                <td>{{ book.publishdate }}</td>
+                <td>
+                    <span class="badge" style="background:#c0000c;">{{ book.average_rating }}/5</span>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'toggle_favorite' book.id %}" class="ms-1 text-decoration-none" title="Toggle favorite">
+                        {% if book.id in fav_book_ids %}
+                        <i class="bi bi-star-fill" style="color:#c0000c;"></i>
+                        {% else %}
+                        <i class="bi bi-star" style="color:#c0000c;"></i>
+                        {% endif %}
+                    </a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.is_authenticated and book.username != user %}
+                    <a href="{% url 'rate_book' book.id %}" class="btn-bx-primary text-decoration-none" style="font-size:.8rem;padding:.25rem .6rem;">
+                        <i class="bi bi-star-half"></i> Rate
+                    </a>
+                    {% else %}&mdash;{% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center text-muted py-4"><i class="bi bi-inbox"></i> No books found.</td></tr>
+            {% endfor %}
+        </tbody>
     </table>
-  </div>
+</div>
 {% endblock content %}

@@ -2,13 +2,17 @@
 {% load static %}
 
 {% block sidenav %}
-   {% for item in item_list %}
-      <li>
-        <a href="{{ item.link }}">  {{ item.item }} </a>
-      </li>
-   {% endfor %}
+{{ block.super }}
 {% endblock sidenav %}
 
 {% block content %}
-   <h1>Welcome to Book Exchange System</h1>
+<div class="page-header"><i class="bi bi-house-fill"></i> Home</div>
+<div class="bx-card p-4 text-center">
+    <i class="bi bi-book-half" style="font-size:4rem;color:#c0000c;"></i>
+    <h2 class="mt-3 fw-bold">Welcome to BookExchange</h2>
+    <p class="text-muted mt-2">Discover, share, and trade books with your community.</p>
+    <a href="{% url 'displaybooks' %}" class="btn-bx-primary text-decoration-none mt-3 d-inline-flex">
+        <i class="bi bi-grid-fill"></i> Browse Books
+    </a>
+</div>
 {% endblock content %}

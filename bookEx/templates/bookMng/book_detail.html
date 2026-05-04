@@ -2,61 +2,64 @@
 {% load static %}
 
 {% block sidenav %}
-   {% for item in item_list %}
-      <li>
-        <a href="{{ item.link }}">  {{ item.item }} </a>
-      </li>
-   {% endfor %}
+{{ block.super }}
 {% endblock sidenav %}
 
 {% block content %}
-   <h1>Book Detail</h1>
-   <table border="2" >
-      <tr>
-          <th>
-              Book Picture
-          </th>
-          <th>
-              Book Name
-          </th>
-          <th>
-              Book Price
-          </th>
-          <th>
-              User Name
-          </th>
-          <th>
-              Book Post Date
-          </th>
-          <th>
-              Book Web
-          </th>
-          <th>
-              Rating
-          </th>
-      </tr>
-       <tr>
-           <td>
-           <img src="{% static book.pic_path %}" width="100" />
-         </td>
-         <td>
-            {{ book.name }}
-         </td>
-         <td>
-            {{ book.price }}
-         </td>
-          <td>
-            {{ book.username }}
-         </td>
-           <td>
-            {{ book.publishdate }}
-         </td>
-           <td>
-               {{ book.web }}
-           </td>
-           <td>
-                {{ book.average_rating }} / 5
-           </td>
-      </tr>
-   </table>
+<div class="page-header"><i class="bi bi-book-open-fill"></i> Book Detail</div>
+
+<div class="row g-4">
+    <!-- Book Info Card -->
+    <div class="col-md-5">
+        <div class="bx-card p-3 text-center h-100">
+            <img src="{% static book.pic_path %}" class="img-fluid rounded mb-3" style="max-height:260px;object-fit:cover;" alt="{{ book.name }}">
+            <h4 class="fw-bold">{{ book.name }}</h4>
+            <span class="badge" style="background:#c0000c;font-size:.95rem;">{{ book.average_rating }} / 5 <i class="bi bi-star-fill"></i></span>
+        </div>
+    </div>
+
+    <!-- Details Card -->
+    <div class="col-md-7">
+        <div class="bx-card p-4 h-100">
+            <h5 class="fw-bold mb-3" style="color:#c0000c;"><i class="bi bi-info-circle-fill"></i> Book Information</h5>
+            <table class="table table-bordered">
+                <tr><th class="text-muted" style="width:38%;"><i class="bi bi-tag"></i> Price</th><td>${{ book.price }}</td></tr>
+                <tr><th class="text-muted"><i class="bi bi-person"></i> Posted By</th><td>{{ book.username }}</td></tr>
+                <tr><th class="text-muted"><i class="bi bi-calendar3"></i> Date</th><td>{{ book.publishdate }}</td></tr>
+                <tr><th class="text-muted"><i class="bi bi-globe"></i> Website</th><td>{{ book.web }}</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Comments Section -->
+<div class="bx-card p-4 mt-4">
+    <h5 class="fw-bold mb-3" style="color:#c0000c;"><i class="bi bi-chat-dots-fill"></i> Comments</h5>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'add_comment' book.id %}" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-2">{{ form.text }}</div>
+        <button type="submit" class="btn-bx-primary"><i class="bi bi-send-fill"></i> Post Comment</button>
+    </form>
+    {% else %}
+    <p class="text-muted"><i class="bi bi-lock"></i> <a href="{% url 'login' %}?next={% url 'book_detail' book.id %}" style="color:#c0000c;">Log in</a> to post a comment.</p>
+    {% endif %}
+    <hr>
+    {% if comments %}
+    <ul class="list-unstyled">
+        {% for comment in comments %}
+        <li class="border-bottom py-3">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <i class="bi bi-person-circle" style="color:#c0000c;font-size:1.2rem;"></i>
+                <strong>{{ comment.user.username }}</strong>
+                <span class="text-muted small">&mdash; {{ comment.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            <p class="mb-0 ms-4" style="white-space:pre-wrap;">{{ comment.text }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted"><i class="bi bi-chat"></i> No comments yet. Be the first!</p>
+    {% endif %}
+</div>
 {% endblock content %}
